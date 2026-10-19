@@ -155,7 +155,7 @@ $tasks | Export-Csv -Path $CsvTasks -NoTypeInformation -Encoding UTF8
 # ----------------------------- 5) WMI Subscriptions -----------------------------
 Write-Host "[5/12] WMI Subscriptions" -ForegroundColor Cyan
 try {
-  $wmiFilters = Get-WmiObject -Namespace root\subscription -Class __EventFilter -ErrorAction SilentlyContinue |
+  $wmiFilters = Get-CimInstance -Namespace root/subscription -ClassName __EventFilter -ErrorAction Stop |
                Select-Object Name,Query
   $wmiFilters | Export-Csv -Path $CsvWMI -NoTypeInformation -Encoding UTF8
 } catch { Write-Sum "WMI enumeration failed: $($_.Exception.Message)" }
